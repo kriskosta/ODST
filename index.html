@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halo 3: ODST | Drop Into Hell</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Scanline overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">ODST</span>
+                <span class="logo-subtitle">ORBITAL DROP SHOCK TROOPERS</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link active" data-section="hero">HOME</a></li>
+                <li><a href="#story" class="nav-link" data-section="story">STORY</a></li>
+                <li><a href="#squad" class="nav-link" data-section="squad">SQUAD</a></li>
+                <li><a href="#gear" class="nav-link" data-section="gear">MCC</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="https://store.steampowered.com/app/1064272/Halo_3_ODST/" target="_blank" rel="noopener noreferrer" class="btn-enlist">ENLIST NOW</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="parallax-section hero" id="hero">
+        <div class="parallax-bg hero-bg"></div>
+        <img src="images/rain-gif-SFFd.gif" alt="" class="hero-rain-overlay">
+        <div class="parallax-content">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <img src="images/Merch_UNSC_Logo_White.svg" alt="UNSC Logo" class="unsc-logo">
+                    <span class="badge-text">UNSC SPECIAL OPERATIONS</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-line title-line-1">PREPARE</span>
+                    <span class="title-line title-line-2">TO DROP</span>
+                </h1>
+                <p class="hero-description">
+                    The year is 2552. New Mombasa has fallen silent. You are an Orbital Drop Shock Trooper—
+                    humanity's most elite soldiers. Cut off from your squad, alone in a hostile city,
+                    you must piece together what happened and find your team before dawn.
+                </p>
+                <div class="hero-buttons">
+                    <a href="https://store.steampowered.com/app/1064272/Halo_3_ODST/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        <span class="btn-text">BUY NOW</span>
+                        <span class="btn-glow"></span>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=TY1kTPjf4C4" target="_blank" rel="noopener noreferrer" class="btn-secondary">WATCH TRAILER</a>
+                </div>
+                <div class="scroll-indicator">
+                    <div class="scroll-mouse">
+                        <div class="scroll-wheel"></div>
+                    </div>
+                    <span class="scroll-text">SCROLL TO DEPLOY</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adventure Ticker Section -->
+    <section class="ticker-section" id="adventure">
+        <div class="ticker-container">
+            <div class="ticker-content">
+                <div class="ticker-text">
+                    <span class="ticker-label">THE ADVENTURE</span>
+                    <h2 class="ticker-title">EXPLORE NEW MOMBASA</h2>
+                    <p class="ticker-desc">Navigate the rain-soaked streets of a city under siege. Uncover clues about your missing squad while evading Covenant patrols in the dark.</p>
+                </div>
+                <div class="ticker-carousel-wrapper">
+                    <div class="ticker-carousel" id="tickerCarousel">
+                        <div class="ticker-track" id="tickerTrack">
+                            <div class="ticker-slide" data-index="0">
+                                <img src="images/H3ODST_Firefight_SecurityZone1stPerson.jpg" alt="Firefight Combat">
+                            </div>
+                            <div class="ticker-slide" data-index="1">
+                                <img src="images/H3ODST_NewMombasa.jpg" alt="New Mombasa Streets">
+                            </div>
+                            <div class="ticker-slide" data-index="2">
+                                <img src="images/H3ODST_AlphaNine_Kikowani.jpg" alt="Alpha-Nine Squad">
+                            </div>
+                            <div class="ticker-slide" data-index="3">
+                                <img src="images/H3ODST_Campaign_1stPersonVISR02.jpg" alt="VISR Mode">
+                            </div>
+                            <div class="ticker-slide" data-index="4">
+                                <img src="images/H3ODST_PK_MombasaStreets_1.jpg" alt="Covenant Patrol">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticker-indicators" id="tickerIndicators"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ticker-data" style="display:none;">
+            <div data-label="THE ADVENTURE" data-title="EXPLORE NEW MOMBASA" data-desc="Navigate the rain-soaked streets of a city under siege. Uncover clues about your missing squad while evading Covenant patrols in the dark."></div>
+            <div data-label="FIREFIGHT MODE" data-title="SURVIVE THE ONSLAUGHT" data-desc="Face endless waves of Covenant forces in this pulse-pounding survival mode. Team up with friends or go solo against impossible odds."></div>
+            <div data-label="YOUR SQUAD" data-title="ALPHA-NINE AWAITS" data-desc="Join the legendary ODST squad. Each member brings unique skills and stories that unfold as you piece together the events of that fateful night."></div>
+            <div data-label="TACTICAL ADVANTAGE" data-title="VISR TECHNOLOGY" data-desc="Your helmet's Visual Intelligence System reveals enemies, weapons, and objectives hidden in the darkness. See what others cannot."></div>
+            <div data-label="ENEMY TERRITORY" data-title="BEHIND ENEMY LINES" data-desc="The Covenant controls the streets. Use stealth and cunning to navigate their patrols, or engage in fierce firefights when discovered."></div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="parallax-section story" id="story">
+        <div class="parallax-bg story-bg"></div>
+        <div class="parallax-content">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-number">01</span>
+                    <h2 class="section-title">THE MISSION</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <div class="mission-layout">
+                    <!-- Mission Image & Gallery -->
+                    <div class="mission-media">
+                        <div class="mission-image-container">
+                            <img src="images/ODST-mission.png" alt="ODST Mission Briefing" class="mission-holotable" data-lightbox="gallery">
+                            <div class="holotable-glow"></div>
+                        </div>
+
+                        <!-- Screenshot Gallery -->
+                        <div class="mission-gallery">
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_gearing_up_web.jpg" alt="Gearing up for the drop">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_odst_combat_web.jpg" alt="ODST Combat">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_firefight_security_web.jpg" alt="Firefight Security Zone">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_soeiv_interface_web.jpg" alt="SOEIV Drop Pod Interface">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_odst_visr_web.jpg" alt="VISR Night Vision">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_odst_art_web.jpg" alt="ODST Art">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_gamespot_web.jpg" alt="Combat Screenshot">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_remaster_web.jpg" alt="ODST Remaster">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_turret_web.jpg" alt="Turret Combat">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_dutch_romeo_web.jpg" alt="Dutch and Romeo">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_campaign_overview_web.jpg" alt="Campaign Overview">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_binary_messiah_web.jpg" alt="Master Chief Collection ODST">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_mickey_dutch_web.jpg" alt="Mickey and Dutch">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_brute_web.jpg" alt="Brute Encounter">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_gamingbolt_web.jpg" alt="ODST Night Operations">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_rally_point_web.jpg" alt="Rally Point Combat">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_kizingo_web.jpg" alt="Kizingo Boulevard">
+                            </div>
+                            <div class="gallery-item" data-lightbox="gallery">
+                                <img src="images/mission_promo_web.jpg" alt="ODST Promotional Art">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mission Content -->
+                    <div class="mission-content">
+                        <div class="mission-briefing">
+                            <div class="card-header">
+                                <span class="card-icon">◆</span>
+                                <span class="card-label">CLASSIFIED BRIEFING</span>
+                            </div>
+                            <h3 class="story-heading">New Mombasa. October 20, 2552.</h3>
+                            <p class="story-text">
+                                The Covenant have invaded Earth. Their assault carrier hovers above the African
+                                megacity of New Mombasa, and the UNSC is mounting a desperate counterattack.
+                                Your mission: drop into the heart of the battle and secure the carrier before
+                                it escapes into slipspace.
+                            </p>
+                            <p class="story-text">
+                                But something goes wrong. The carrier jumps while you're still in the drop pod,
+                                and the shockwave scatters your squad across the burning city. You wake up six
+                                hours later, alone in the dark, surrounded by enemies.
+                            </p>
+                        </div>
+
+                        <div class="mission-features">
+                            <div class="mission-feature">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 6v6l4 2"/>
+                                    </svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>NON-LINEAR STORY</h4>
+                                    <p>Explore New Mombasa at your own pace. Discover audio logs that reveal the city's secrets and your squad's fate.</p>
+                                </div>
+                            </div>
+
+                            <div class="mission-feature">
+                                <div class="feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                        <path d="M2 17l10 5 10-5"/>
+                                        <path d="M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>OPEN WORLD</h4>
+                                    <p>The entire city is your battlefield. Navigate rain-soaked streets, abandoned buildings, and Covenant strongholds.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <button class="lightbox-next" aria-label="Next image">&#10095;</button>
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-image">
+        </div>
+    </div>
+
+    <!-- Squad Section -->
+    <section class="parallax-section squad" id="squad">
+        <div class="parallax-bg squad-bg">
+            <img src="images/H3ODST_AlphaNine_Kikowani.jpg" alt="Alpha-Nine Squad" class="squad-bg-image">
+        </div>
+        <div class="parallax-content">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-number">02</span>
+                    <h2 class="section-title">ALPHA-NINE</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <p class="squad-intro">
+                    Alpha-Nine isn't just any ODST squad. They're the best of the best—handpicked for the most
+                    dangerous missions humanity has to offer. Each member brings unique skills and a personal
+                    history that unfolds throughout the campaign.
+                </p>
+
+                <div class="squad-carousel-wrapper">
+                    <div class="squad-carousel" id="squadCarousel">
+                    <div class="squad-member" data-member="rookie">
+                        <div class="member-image">
+                            <img src="images/Halo3_ODST-Rookie.jpg" alt="The Rookie" class="member-portrait">
+                            <div class="member-glow"></div>
+                        </div>
+                        <div class="member-info">
+                            <span class="member-rank">LANCE CORPORAL</span>
+                            <h3 class="member-name">THE ROOKIE</h3>
+                            <p class="member-desc">
+                                The newest member of Alpha-Nine. Silent, determined, and alone in the dark streets
+                                of New Mombasa. Your eyes and ears in the present timeline as you piece together
+                                what happened to your squad.
+                            </p>
+                            <div class="member-traits">
+                                <span class="trait">Protagonist</span>
+                                <span class="trait">Silent Type</span>
+                                <span class="trait">Survivor</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="squad-member" data-member="buck">
+                        <div class="member-image">
+                            <img src="images/Halo3_ODST-Buck.jpg" alt="Edward Buck" class="member-portrait">
+                            <div class="member-glow"></div>
+                        </div>
+                        <div class="member-info">
+                            <span class="member-rank">GUNNERY SERGEANT</span>
+                            <h3 class="member-name">EDWARD BUCK</h3>
+                            <p class="member-desc">
+                                The veteran leader of Alpha-Nine. Twenty years of combat experience, a sharp wit,
+                                and an unwavering dedication to his squad. Buck's been through hell before—
+                                this is just another day at the office.
+                            </p>
+                            <div class="member-traits">
+                                <span class="trait">Squad Leader</span>
+                                <span class="trait">Veteran</span>
+                                <span class="trait">Tactician</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="squad-member" data-member="dare">
+                        <div class="member-image">
+                            <img src="images/Halo3_ODST-Dare.jpg" alt="Veronica Dare" class="member-portrait">
+                            <div class="member-glow"></div>
+                        </div>
+                        <div class="member-info">
+                            <span class="member-rank">CAPTAIN</span>
+                            <h3 class="member-name">VERONICA DARE</h3>
+                            <p class="member-desc">
+                                ONI intelligence officer with a classified mission. She diverted Alpha-Nine
+                                from the main assault, and she knows more about what's happening than she's
+                                letting on. Buck's former flame and current complication.
+                            </p>
+                            <div class="member-traits">
+                                <span class="trait">ONI Agent</span>
+                                <span class="trait">Mission Lead</span>
+                                <span class="trait">Classified</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="squad-member" data-member="romeo">
+                        <div class="member-image">
+                            <img src="images/Halo3_ODST-Romeo.jpg" alt="Kojo Romeo Agu" class="member-portrait">
+                            <div class="member-glow"></div>
+                        </div>
+                        <div class="member-info">
+                            <span class="member-rank">LANCE CORPORAL</span>
+                            <h3 class="member-name">KOJO "ROMEO" AJU</h3>
+                            <p class="member-desc">
+                                Alpha-Nine's sharpshooter and resident cynic. Romeo's attitude might rub people
+                                the wrong way, but when the chips are down, there's no one you'd rather have
+                                watching your back from a rooftop.
+                            </p>
+                            <div class="member-traits">
+                                <span class="trait">Sniper</span>
+                                <span class="trait">Wisecracker</span>
+                                <span class="trait">Sharpshooter</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="squad-member" data-member="mickey">
+                        <div class="member-image">
+                            <img src="images/Halo3_ODST-Mickey.jpg" alt="Michael Mickey Crespo" class="member-portrait">
+                            <div class="member-glow"></div>
+                        </div>
+                        <div class="member-info">
+                            <span class="member-rank">PRIVATE FIRST CLASS</span>
+                            <h3 class="member-name">MICHAEL "MICKEY" CRESPO</h3>
+                            <p class="member-desc">
+                                Demolitions expert and the squad's optimist. If it needs to explode, Mickey's
+                                your guy. His upbeat attitude keeps morale high even when the situation looks
+                                hopeless—which in New Mombasa, is pretty much always.
+                            </p>
+                            <div class="member-traits">
+                                <span class="trait">Demolitions</span>
+                                <span class="trait">Heavy Weapons</span>
+                                <span class="trait">Optimist</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="squad-member" data-member="dutch">
+                        <div class="member-image">
+                            <img src="images/Halo3_ODST-Dutch.jpg" alt="Taylor Dutch Miles" class="member-portrait">
+                            <div class="member-glow"></div>
+                        </div>
+                        <div class="member-info">
+                            <span class="member-rank">CORPORAL</span>
+                            <h3 class="member-name">TAYLOR "DUTCH" MILES</h3>
+                            <p class="member-desc">
+                                The heavy weapons specialist and moral compass of Alpha-Nine. Dutch is a man
+                                of faith and firepower in equal measure. When the Covenant comes knocking,
+                                he answers with a spartan laser.
+                            </p>
+                            <div class="member-traits">
+                                <span class="trait">Heavy Weapons</span>
+                                <span class="trait">Religious</span>
+                                <span class="trait">Moral Center</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="carousel-nav">
+                    <button class="carousel-btn prev" id="prevMember">◀</button>
+                    <div class="carousel-dots" id="carouselDots"></div>
+                    <button class="carousel-btn next" id="nextMember">▶</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arsenal Section -->
+    <section class="parallax-section arsenal" id="gear">
+        <div class="parallax-bg arsenal-bg">
+            <img src="images/H3ODST_Firefight_SecurityZone1stPerson.jpg" alt="ODST Combat" class="arsenal-bg-image">
+        </div>
+        <div class="parallax-content">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-number">03</span>
+                    <h2 class="section-title">ARSENAL</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <div class="arsenal-selector">
+                    <!-- Weapon Icons Row -->
+                    <div class="weapon-icons">
+                        <button class="weapon-icon active" data-weapon="smg">
+                            <img src="images/Halo3-ODST_Silenced-SMG-02.png" alt="M7S SMG">
+                            <span class="weapon-icon-label">SMG</span>
+                        </button>
+                        <button class="weapon-icon" data-weapon="pistol">
+                            <img src="images/M6C_SOCOM_r.png" alt="M6C/SOCOM">
+                            <span class="weapon-icon-label">SOCOM</span>
+                        </button>
+                        <button class="weapon-icon" data-weapon="assault">
+                            <img src="images/H3-MA5C-ICWS-AR-Left.png" alt="MA5C Assault Rifle">
+                            <span class="weapon-icon-label">MA5C</span>
+                        </button>
+                        <button class="weapon-icon" data-weapon="shotgun">
+                            <img src="images/H3-M90-Shotgun-Side.png" alt="M90A Shotgun">
+                            <span class="weapon-icon-label">M90A</span>
+                        </button>
+                        <button class="weapon-icon" data-weapon="sniper">
+                            <img src="images/H3-SRS99DS2AM-SniperRifleSide.png" alt="SRS99 Sniper">
+                            <span class="weapon-icon-label">SRS99</span>
+                        </button>
+                        <button class="weapon-icon" data-weapon="rocket">
+                            <img src="images/H3-M41SSRocketLauncherLeft.png" alt="M41 SPNKr">
+                            <span class="weapon-icon-label">SPNKr</span>
+                        </button>
+                    </div>
+
+                    <!-- Weapon Detail Area -->
+                    <div class="weapon-detail">
+                        <div class="weapon-detail-content">
+                            <!-- Weapon Info (Left) -->
+                            <div class="weapon-info">
+                                <span class="weapon-category">PRIMARY WEAPON</span>
+                                <h3 class="weapon-name">M7S SMG</h3>
+                                <p class="weapon-tagline">"Silent but deadly"</p>
+                                <p class="weapon-desc">The silenced submachine gun is the ODST's signature weapon. Perfect for close-quarters combat and stealth operations, its suppressed fire lets you eliminate targets without alerting the entire Covenant garrison. The integrated suppressor and muzzle brake reduce both sound and recoil.</p>
+                                <div class="weapon-stats">
+                                    <div class="weapon-stat">
+                                        <span class="stat-name">DAMAGE</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 45%"></div></div>
+                                    </div>
+                                    <div class="weapon-stat">
+                                        <span class="stat-name">RANGE</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 35%"></div></div>
+                                    </div>
+                                    <div class="weapon-stat">
+                                        <span class="stat-name">FIRE RATE</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 90%"></div></div>
+                                    </div>
+                                    <div class="weapon-stat">
+                                        <span class="stat-name">ACCURACY</span>
+                                        <div class="stat-bar"><div class="stat-fill" style="width: 60%"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Weapon Image (Right) -->
+                            <div class="weapon-image-container">
+                                <img src="images/Halo3-ODST_Silenced-SMG-02.png" alt="M7S SMG" class="weapon-detail-image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weapon Data (Hidden) -->
+                <div class="weapon-data" style="display:none;">
+                    <div data-weapon="smg"
+                         data-category="PRIMARY WEAPON"
+                         data-name="M7S SMG"
+                         data-tagline="&quot;Silent but deadly&quot;"
+                         data-desc="The silenced submachine gun is the ODST's signature weapon. Perfect for close-quarters combat and stealth operations, its suppressed fire lets you eliminate targets without alerting the entire Covenant garrison. The integrated suppressor and muzzle brake reduce both sound and recoil."
+                         data-image="images/Halo3-ODST_Silenced-SMG-02.png"
+                         data-damage="45" data-range="35" data-firerate="90" data-accuracy="60"></div>
+                    <div data-weapon="pistol"
+                         data-category="SIDEARM"
+                         data-name="M6C/SOCOM"
+                         data-tagline="&quot;Precision in the palm of your hand&quot;"
+                         data-desc="A suppressed, scoped variant of the standard UNSC pistol. The SOCOM combines precision accuracy with stopping power. Its 2x scope makes it perfect for picking off enemies at medium range. Standard issue for all ODST operatives on stealth missions."
+                         data-image="images/M6C_SOCOM_r.png"
+                         data-damage="70" data-range="60" data-firerate="40" data-accuracy="85"></div>
+                    <div data-weapon="assault"
+                         data-category="ASSAULT RIFLE"
+                         data-name="MA5C ICWS"
+                         data-tagline="&quot;Reliable firepower when stealth isn't an option&quot;"
+                         data-desc="The MA5C Individual Combat Weapon System is the workhorse of the UNSC arsenal. With a 32-round magazine and fully automatic fire, it's perfect for sustained engagements. The built-in ammo counter and compass make it indispensable in the field."
+                         data-image="images/H3-MA5C-ICWS-AR-Left.png"
+                         data-damage="50" data-range="45" data-firerate="85" data-accuracy="55"></div>
+                    <div data-weapon="shotgun"
+                         data-category="CLOSE QUARTERS"
+                         data-name="M90A SHOTGUN"
+                         data-tagline="&quot;Room clearer&quot;"
+                         data-desc="The M90A Close Assault Weapon System fires 8-gauge magnum shells capable of stopping any Covenant infantry in their tracks. Devastating at close range, it's the weapon of choice for clearing tight spaces and breaching operations."
+                         data-image="images/H3-M90-Shotgun-Side.png"
+                         data-damage="95" data-range="20" data-firerate="25" data-accuracy="40"></div>
+                    <div data-weapon="sniper"
+                         data-category="PRECISION"
+                         data-name="SRS99D-S2 AM"
+                         data-tagline="&quot;One shot, one kill&quot;"
+                         data-desc="The Sniper Rifle System 99D is a gas-operated anti-materiel rifle firing 14.5×114mm armor-piercing rounds. With a 5-10x scope, it can eliminate targets from extreme range. Essential for reconnaissance and eliminating high-value targets."
+                         data-image="images/H3-SRS99DS2AM-SniperRifleSide.png"
+                         data-damage="100" data-range="100" data-firerate="15" data-accuracy="95"></div>
+                    <div data-weapon="rocket"
+                         data-category="HEAVY ORDNANCE"
+                         data-name="M41 SPNKr"
+                         data-tagline="&quot;Make it rain&quot;"
+                         data-desc="The M41 Surface-to-Surface Rocket Medium Anti-Vehicle/Assault Weapon fires 102mm shaped-charge rockets. Capable of destroying vehicles and heavily armored targets with a single hit. The twin-tube design allows for rapid follow-up shots."
+                         data-image="images/H3-M41SSRocketLauncherLeft.png"
+                         data-damage="100" data-range="70" data-firerate="10" data-accuracy="50"></div>
+                </div>
+
+                <!-- Included Titles Intro Section -->
+                <div class="included-titles-intro">
+                    <div class="included-titles-split">
+                        <div class="included-titles-left">
+                            <img src="images/masterchief_character.png" alt="Master Chief" class="included-titles-character">
+                        </div>
+                        <div class="included-titles-right">
+                            <div class="included-titles-bg">
+                                <img src="images/zeta_halo_bg.jpg" alt="" class="included-titles-bg-image">
+                                <div class="included-titles-overlay"></div>
+                            </div>
+                            <div class="included-titles-content">
+                                <span class="included-titles-label">INCLUDED TITLES</span>
+                                <h2 class="included-titles-heading">EXPERIENCE THE COMPLETE SAGA</h2>
+                                <p class="included-titles-desc">From the discovery of the first Halo ring to the fall of Reach, play through every chapter of humanity's war for survival. Halo 3: ODST delivers a unique perspective on the conflict through the eyes of elite Orbital Drop Shock Troopers.</p>
+                                <div class="included-titles-badges">
+                                    <div class="included-badge">
+                                        <span class="badge-number">6</span>
+                                        <span class="badge-label">GAMES</span>
+                                    </div>
+                                    <div class="included-badge">
+                                        <span class="badge-number">67+</span>
+                                        <span class="badge-label">MISSIONS</span>
+                                    </div>
+                                    <div class="included-badge">
+                                        <span class="badge-number">120+</span>
+                                        <span class="badge-label">MULTIPLAYER MAPS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master Chief Collection Grid Section -->
+                <div class="mcc-collection">
+                    <div class="mcc-header">
+                        <h2 class="mcc-title">HALO: THE MASTER CHIEF COLLECTION</h2>
+                        <p class="mcc-subtitle">The ultimate Halo experience. Six legendary games, one epic collection.</p>
+                    </div>
+                    <div class="mcc-grid">
+                        <a href="https://store.steampowered.com/app/1064221/Halo_Combat_Evolved_Anniversary/" target="_blank" rel="noopener noreferrer" class="mcc-game-item">
+                            <img src="images/halo_ce_anniversary_cover.jpg" alt="Halo Combat Evolved Anniversary" class="mcc-game-cover">
+                            <div class="mcc-gameplay-bg" style="background-image: url('images/Halo_CE.gif');"></div>
+                            <div class="mcc-game-info">
+                                <h3 class="mcc-game-title">HALO: COMBAT EVOLVED ANNIVERSARY</h3>
+                                <p class="mcc-game-dev">343 Industries / Bungie</p>
+                                <span class="mcc-game-year">2011</span>
+                            </div>
+                        </a>
+                        <a href="https://store.steampowered.com/app/1064270/Halo_2_Anniversary/" target="_blank" rel="noopener noreferrer" class="mcc-game-item">
+                            <img src="images/halo_2_anniversary_thumb.jpg" alt="Halo 2 Anniversary" class="mcc-game-cover">
+                            <div class="mcc-gameplay-bg" style="background-image: url('images/halo_2.gif');"></div>
+                            <div class="mcc-game-info">
+                                <h3 class="mcc-game-title">HALO 2: ANNIVERSARY</h3>
+                                <p class="mcc-game-dev">343 Industries / Bungie</p>
+                                <span class="mcc-game-year">2014</span>
+                            </div>
+                        </a>
+                        <a href="https://store.steampowered.com/app/1064271/Halo_3/" target="_blank" rel="noopener noreferrer" class="mcc-game-item">
+                            <img src="images/halo_3_cover.jpg" alt="Halo 3" class="mcc-game-cover">
+                            <div class="mcc-gameplay-bg" style="background-image: url('images/Halo_3.gif');"></div>
+                            <div class="mcc-game-info">
+                                <h3 class="mcc-game-title">HALO 3</h3>
+                                <p class="mcc-game-dev">Bungie</p>
+                                <span class="mcc-game-year">2007</span>
+                            </div>
+                        </a>
+                        <a href="https://store.steampowered.com/app/1064272/Halo_3_ODST/" target="_blank" rel="noopener noreferrer" class="mcc-game-item mcc-featured">
+                            <img src="images/halo_odst_cover.png" alt="Halo 3: ODST" class="mcc-game-cover">
+                            <div class="mcc-gameplay-bg" style="background-image: url('images/Halo_ODST.gif');"></div>
+                            <div class="mcc-game-info">
+                                <h3 class="mcc-game-title">HALO 3: ODST</h3>
+                                <p class="mcc-game-dev">Bungie</p>
+                                <span class="mcc-game-year">2009</span>
+                            </div>
+                        </a>
+                        <a href="https://store.steampowered.com/app/1064220/Halo_Reach/" target="_blank" rel="noopener noreferrer" class="mcc-game-item">
+                            <img src="images/halo_reach_cover.png" alt="Halo Reach" class="mcc-game-cover">
+                            <div class="mcc-gameplay-bg" style="background-image: url('images/Halo_Reach.gif');"></div>
+                            <div class="mcc-game-info">
+                                <h3 class="mcc-game-title">HALO: REACH</h3>
+                                <p class="mcc-game-dev">Bungie</p>
+                                <span class="mcc-game-year">2010</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="mcc-cta">
+                        <a href="https://store.steampowered.com/app/976730/Halo_The_Master_Chief_Collection/" target="_blank" rel="noopener noreferrer" class="btn-primary large mcc-buy-btn">
+                            <span class="btn-text">GET ON STEAM</span>
+                            <span class="btn-glow"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-text">ODST</span>
+                <span class="footer-tagline">ORBITAL DROP SHOCK TROOPERS</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+            </div>
+            <div class="footer-legal">
+                <p>© 2552 United Nations Space Command. All rights reserved.</p>
+                <p>Halo and ODST are trademarks of Microsoft Corporation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
