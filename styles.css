@@ -138,22 +138,12 @@ body {
 
 .logo {
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
 
-.logo-text {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: var(--color-text);
-    letter-spacing: 0.3em;
-}
-
-.logo-subtitle {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--color-text-dim);
-    margin-top: -5px;
+.nav-logo-img {
+    height: 40px;
+    width: auto;
 }
 
 .nav-links {
@@ -273,18 +263,35 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(180deg, var(--color-bg-dark) 0%, var(--color-bg-medium) 100%);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .hero-bg {
-    background:
-        linear-gradient(180deg, rgba(10, 10, 12, 0.4) 0%, rgba(10, 10, 12, 0.6) 50%, var(--color-bg-dark) 100%),
-        radial-gradient(ellipse at 30% 50%, rgba(255, 204, 0, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 40%),
-        url('images/H3ODST_CoverArt_Logoless.png');
-    background-size: cover, cover, cover, cover;
-    background-position: center, center, center, center 20%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/odst_hero_bg.jpg');
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
+}
+
+.hero-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 50%, #0a0a0c 100%);
+    z-index: 6;
+    pointer-events: none;
 }
 
 /* Hero Rain Overlay GIF */
@@ -302,24 +309,41 @@ body {
 }
 
 .hero-content {
+    position: relative;
+    z-index: 10;
     max-width: 900px;
-    margin: 0 auto;
-    padding: 0 2rem;
+    width: 100%;
+    padding: 0 2rem 1rem;
     text-align: center;
 }
 
-.hero-badge {
+.hero-platforms {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-bottom: 2rem;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 2.5rem;
 }
 
-.unsc-logo {
-    width: 60px;
-    height: auto;
-    margin-bottom: 1rem;
-    opacity: 0.9;
+.platforms-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--color-text-dim);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.platforms-logos {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.platform-logo {
+    height: 20px;
+    width: auto;
+    opacity: 0.7;
+    filter: brightness(0) invert(1);
 }
 
 .badge-text {
@@ -337,24 +361,14 @@ body {
 .title-line {
     display: block;
     font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 900;
     letter-spacing: 0.1em;
     line-height: 1.1;
-}
-
-.title-line-1 {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    color: var(--color-text);
-    opacity: 0;
-    animation: slideInLeft 0.8s ease forwards;
-}
-
-.title-line-2 {
-    font-size: clamp(3rem, 10vw, 7rem);
     color: #ffffff;
-    text-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
     opacity: 0;
-    animation: slideInRight 0.8s ease 0.2s forwards;
+    animation: fadeIn 1s ease forwards;
 }
 
 @keyframes slideInLeft {
@@ -387,30 +401,47 @@ body {
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
     opacity: 0;
     animation: fadeIn 1s ease 0.9s forwards;
 }
 
 .btn-primary {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     text-decoration: none;
     font-family: var(--font-display);
     font-size: 0.9rem;
     font-weight: 600;
     padding: 1rem 2.5rem;
-    background: #ffffff;
-    border: none;
-    color: var(--color-bg-dark);
+    background: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
     letter-spacing: 0.15em;
+    border-radius: 8px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background 0.3s ease, color 0.3s ease;
+}
+
+.btn-icon {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1);
+    pointer-events: none;
+    transition: filter 0.3s ease;
+}
+
+.btn-primary:hover .btn-icon {
+    filter: brightness(0);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
+    background: #ffffff;
+    color: var(--color-bg-dark);
     box-shadow: 0 10px 30px rgba(255, 255, 255, 0.4);
 }
 
@@ -3047,8 +3078,8 @@ body {
     }
 
     .hero-bg {
-        background-position: center, center, center, 35% center;
-        background-size: cover, cover, cover, auto 100%;
+        background-position: center, center;
+        background-size: cover, cover;
     }
 
     .hero-buttons {

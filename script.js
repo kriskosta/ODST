@@ -86,7 +86,7 @@ function initParallax() {
 function initNavigation() {
     const nav = document.getElementById('nav');
     const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.parallax-section');
+    const sections = document.querySelectorAll('#hero, .parallax-section');
 
     // Scroll detection for nav background
     let lastScroll = 0;

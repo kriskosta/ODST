@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halo 3: ODST | Drop Into Hell</title>
+    <link rel="icon" href="images/favicon-light.png" media="(prefers-color-scheme: dark)">
+    <link rel="icon" href="images/favicon-dark.png" media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -14,10 +16,9 @@
     <!-- Navigation -->
     <nav class="nav" id="nav">
         <div class="nav-container">
-            <div class="logo">
-                <span class="logo-text">ODST</span>
-                <span class="logo-subtitle">ORBITAL DROP SHOCK TROOPERS</span>
-            </div>
+            <a href="#hero" class="logo">
+                <img src="images/odst_nav_logo.png" alt="Halo 3: ODST" class="nav-logo-img">
+            </a>
             <ul class="nav-links">
                 <li><a href="#hero" class="nav-link active" data-section="hero">HOME</a></li>
                 <li><a href="#story" class="nav-link" data-section="story">STORY</a></li>
@@ -31,36 +32,32 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="parallax-section hero" id="hero">
-        <div class="parallax-bg hero-bg"></div>
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
         <img src="images/rain-gif-SFFd.gif" alt="" class="hero-rain-overlay">
-        <div class="parallax-content">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <img src="images/Merch_UNSC_Logo_White.svg" alt="UNSC Logo" class="unsc-logo">
-                    <span class="badge-text">UNSC SPECIAL OPERATIONS</span>
-                </div>
-                <h1 class="hero-title">
-                    <span class="title-line title-line-1">PREPARE</span>
-                    <span class="title-line title-line-2">TO DROP</span>
-                </h1>
-                <p class="hero-description">
-                    The year is 2552. New Mombasa has fallen silent. You are an Orbital Drop Shock Trooper—
-                    humanity's most elite soldiers. Cut off from your squad, alone in a hostile city,
-                    you must piece together what happened and find your team before dawn.
-                </p>
-                <div class="hero-buttons">
-                    <a href="https://store.steampowered.com/app/1064272/Halo_3_ODST/" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                        <span class="btn-text">BUY NOW</span>
-                        <span class="btn-glow"></span>
-                    </a>
-                    <a href="https://www.youtube.com/watch?v=TY1kTPjf4C4" target="_blank" rel="noopener noreferrer" class="btn-secondary">WATCH TRAILER</a>
-                </div>
-                <div class="scroll-indicator">
-                    <div class="scroll-mouse">
-                        <div class="scroll-wheel"></div>
-                    </div>
-                    <span class="scroll-text">SCROLL TO DEPLOY</span>
+        <div class="hero-fade"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">PREPARE TO DROP</span>
+            </h1>
+            <div class="hero-buttons">
+                <a href="https://www.xbox.com/en-US/games/store/halo-the-master-chief-collection/9ntm9hxnlszx" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                    <img src="images/icon-xbox.svg" alt="" class="btn-icon">
+                    <span class="btn-text">BUY ON XBOX</span>
+                    <span class="btn-glow"></span>
+                </a>
+                <a href="https://store.steampowered.com/app/976730/Halo_The_Master_Chief_Collection/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                    <img src="images/icon-steam.svg" alt="" class="btn-icon">
+                    <span class="btn-text">BUY ON STEAM</span>
+                    <span class="btn-glow"></span>
+                </a>
+            </div>
+            <div class="hero-platforms">
+                <span class="platforms-label">AVAILABLE NOW ON</span>
+                <div class="platforms-logos">
+                    <img src="images/steam_logo.png" alt="Steam" class="platform-logo">
+                    <img src="images/pcgamepass_logo.svg" alt="PC Game Pass" class="platform-logo">
+                    <img src="images/xbox_xs_logo.svg" alt="Xbox Series X|S" class="platform-logo">
                 </div>
             </div>
         </div>
