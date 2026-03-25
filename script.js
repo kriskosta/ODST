@@ -186,8 +186,20 @@ function initScrollVideo() {
     let targetTime = 0;
     let currentTime = 0;
     let animating = false;
-    const LERP_FACTOR = 0.12;
-    const SNAP_THRESHOLD = 0.01;
+    let isVisible = false;
+    const LERP_FACTOR_FAST = 0.25;
+    const LERP_FACTOR_SLOW = 0.15;
+    const SNAP_THRESHOLD = 0.02;
+
+    // Only run scroll/animation logic when section is visible
+    const visibilityObserver = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+        if (isVisible && videoReady && video.duration) {
+            targetTime = getScrollProgress() * video.duration;
+            startAnimating();
+        }
+    }, { threshold: 0 });
+    visibilityObserver.observe(section);
 
     video.addEventListener('loadedmetadata', () => {
         videoReady = true;
@@ -205,7 +217,7 @@ function initScrollVideo() {
     }
 
     function animate() {
-        if (!videoReady || !video.duration) {
+        if (!isVisible || !videoReady || !video.duration) {
             animating = false;
             return;
         }
@@ -219,7 +231,8 @@ function initScrollVideo() {
             return;
         }
 
-        currentTime += diff * LERP_FACTOR;
+        const factor = Math.abs(diff) > 0.5 ? LERP_FACTOR_FAST : LERP_FACTOR_SLOW;
+        currentTime += diff * factor;
         if (Math.abs(currentTime - video.currentTime) > 0.016) {
             video.currentTime = currentTime;
         }
@@ -235,10 +248,9 @@ function initScrollVideo() {
     }
 
     window.addEventListener('scroll', () => {
-        if (videoReady && video.duration) {
-            targetTime = getScrollProgress() * video.duration;
-            startAnimating();
-        }
+        if (!isVisible || !videoReady || !video.duration) return;
+        targetTime = getScrollProgress() * video.duration;
+        startAnimating();
     }, { passive: true });
 }
 
