@@ -3139,7 +3139,7 @@ body {
     .scroll-video-mobile-fallback {
         display: block;
         position: relative;
-        background-image: url('images/prologue_background.gif');
+        background-image: url('images/prologue_background_mobile.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

@@ -274,15 +274,19 @@ function initZoomMask() {
     const fadeEl = section.querySelector('.zoom-mask-fade');
     if (!textEl || !video) return;
 
-    // On mobile, mask is hidden — just autoplay video, no zoom effect
+    // On mobile, mask is hidden — play video when visible, no zoom effect
     if (window.innerWidth <= 768) {
-        function tryAutoplay() {
-            video.play().catch(() => {
-                document.addEventListener('click', () => video.play(), { once: true });
+        const playVideo = () => video.play().catch(() => {});
+        // Play/pause based on visibility (helps mobile autoplay restrictions)
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) playVideo();
+                else video.pause();
             });
-        }
-        if (video.readyState >= 3) tryAutoplay();
-        else video.addEventListener('canplay', tryAutoplay, { once: true });
+        }, { threshold: 0.25 });
+        io.observe(section);
+        // Also try on first user interaction as fallback
+        document.addEventListener('touchstart', () => playVideo(), { once: true });
         return;
     }
 
