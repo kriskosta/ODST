@@ -304,6 +304,18 @@ function initZoomMask() {
 
     const MAX_SCALE = 25;
     let ticking = false;
+    let isVisible = false;
+
+    // Play/pause video based on visibility
+    const visibilityObserver = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+        if (isVisible) {
+            video.play().catch(() => {});
+        } else {
+            video.pause();
+        }
+    }, { threshold: 0.1 });
+    visibilityObserver.observe(section);
 
     function getScrollProgress() {
         const rect = section.getBoundingClientRect();
@@ -346,24 +358,17 @@ function initZoomMask() {
     }
 
     window.addEventListener('scroll', () => {
+        if (!isVisible) return;
         if (!ticking) {
             requestAnimationFrame(updateZoom);
             ticking = true;
         }
     }, { passive: true });
 
-    // Video autoplay (muted)
-    function tryAutoplay() {
-        video.play().catch(() => {
-            document.addEventListener('click', () => video.play(), { once: true });
-        });
-    }
-
-    if (video.readyState >= 3) {
-        tryAutoplay();
-    } else {
-        video.addEventListener('canplay', tryAutoplay, { once: true });
-    }
+    // Fallback autoplay on first user interaction
+    document.addEventListener('click', () => {
+        if (isVisible) video.play().catch(() => {});
+    }, { once: true });
 
 }
 
