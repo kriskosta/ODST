@@ -91,34 +91,38 @@ function initNavigation() {
     const sections = document.querySelectorAll('#hero, .parallax-section');
 
     // Scroll detection for nav background
-    let lastScroll = 0;
+    let navTicking = false;
     window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY;
+        if (navTicking) return;
+        navTicking = true;
+        requestAnimationFrame(() => {
+            const currentScroll = window.scrollY;
 
-        if (currentScroll > 100) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
-
-        // Update active nav link based on scroll position
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop - 200;
-            const sectionHeight = section.offsetHeight;
-            const sectionId = section.getAttribute('id');
-
-            if (currentScroll >= sectionTop && currentScroll < sectionTop + sectionHeight) {
-                navLinks.forEach((link) => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-section') === sectionId) {
-                        link.classList.add('active');
-                    }
-                });
+            if (currentScroll > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
             }
-        });
 
-        lastScroll = currentScroll;
-    });
+            // Update active nav link based on scroll position
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop - 200;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (currentScroll >= sectionTop && currentScroll < sectionTop + sectionHeight) {
+                    navLinks.forEach((link) => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('data-section') === sectionId) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+
+            navTicking = false;
+        });
+    }, { passive: true });
 
     // Smooth scroll for nav links
     navLinks.forEach((link) => {
@@ -183,74 +187,58 @@ function initScrollVideo() {
     }
 
     let videoReady = false;
-    let targetTime = 0;
-    let currentTime = 0;
-    let animating = false;
     let isVisible = false;
-    const LERP_FACTOR_FAST = 0.25;
-    const LERP_FACTOR_SLOW = 0.15;
-    const SNAP_THRESHOLD = 0.02;
+    let ticking = false;
 
-    // Only run scroll/animation logic when section is visible
+    // Cache section geometry — avoid layout recalc on every scroll
+    let sectionTop = section.offsetTop;
+    let scrollableDistance = section.offsetHeight - window.innerHeight;
+    window.addEventListener('resize', () => {
+        sectionTop = section.offsetTop;
+        scrollableDistance = section.offsetHeight - window.innerHeight;
+    });
+
+    // Visibility gating — skip work when offscreen
     const visibilityObserver = new IntersectionObserver((entries) => {
         isVisible = entries[0].isIntersecting;
-        if (isVisible && videoReady && video.duration) {
-            targetTime = getScrollProgress() * video.duration;
-            startAnimating();
-        }
+        if (isVisible && videoReady) updateFrame();
     }, { threshold: 0 });
     visibilityObserver.observe(section);
+
+    // Preload entire video into memory to eliminate network seek stalls
+    const videoSrc = video.src;
+    fetch(videoSrc)
+        .then(res => res.blob())
+        .then(blob => {
+            video.src = URL.createObjectURL(blob);
+            // loadedmetadata fires after blob src is assigned
+        })
+        .catch(() => {
+            // Fallback: use original src with progressive download
+            video.src = videoSrc;
+        });
 
     video.addEventListener('loadedmetadata', () => {
         videoReady = true;
         video.pause();
-        targetTime = getScrollProgress() * video.duration;
-        currentTime = targetTime;
-        video.currentTime = currentTime;
+        updateFrame();
     });
 
     function getScrollProgress() {
-        const rect = section.getBoundingClientRect();
-        const scrollableDistance = section.offsetHeight - window.innerHeight;
-        const scrolled = -rect.top;
+        const scrolled = window.scrollY - sectionTop;
         return Math.max(0, Math.min(1, scrolled / scrollableDistance));
     }
 
-    function animate() {
-        if (!isVisible || !videoReady || !video.duration) {
-            animating = false;
-            return;
-        }
-
-        const diff = targetTime - currentTime;
-
-        if (Math.abs(diff) < SNAP_THRESHOLD) {
-            currentTime = targetTime;
-            video.currentTime = currentTime;
-            animating = false;
-            return;
-        }
-
-        const factor = Math.abs(diff) > 0.5 ? LERP_FACTOR_FAST : LERP_FACTOR_SLOW;
-        currentTime += diff * factor;
-        if (Math.abs(currentTime - video.currentTime) > 0.016) {
-            video.currentTime = currentTime;
-        }
-
-        requestAnimationFrame(animate);
-    }
-
-    function startAnimating() {
-        if (!animating) {
-            animating = true;
-            requestAnimationFrame(animate);
-        }
+    function updateFrame() {
+        if (!videoReady || !video.duration) return;
+        video.currentTime = getScrollProgress() * video.duration;
+        ticking = false;
     }
 
     window.addEventListener('scroll', () => {
-        if (!isVisible || !videoReady || !video.duration) return;
-        targetTime = getScrollProgress() * video.duration;
-        startAnimating();
+        if (!isVisible || !videoReady || ticking) return;
+        ticking = true;
+        requestAnimationFrame(updateFrame);
     }, { passive: true });
 }
 
