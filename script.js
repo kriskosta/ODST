@@ -302,7 +302,7 @@ function initZoomMask() {
 
     function updateZoom() {
         const progress = getScrollProgress();
-        const scale = BASE_SCALE * (1 + progress * (MAX_SCALE - 1));
+        const scale = 1 + progress * (MAX_SCALE - 1);
 
         // Fade out the mask starting at 80% progress, fully gone by 90%
         const fadeStart = 0.45;
