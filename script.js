@@ -253,6 +253,8 @@ function initMobilePrologue() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+            } else {
+                entry.target.classList.remove('visible');
             }
         });
     }, { threshold: 0.3 });
@@ -272,8 +274,19 @@ function initZoomMask() {
     const fadeEl = section.querySelector('.zoom-mask-fade');
     if (!textEl || !video) return;
 
+    // On mobile, mask is hidden — just autoplay video, no zoom effect
+    if (window.innerWidth <= 768) {
+        function tryAutoplay() {
+            video.play().catch(() => {
+                document.addEventListener('click', () => video.play(), { once: true });
+            });
+        }
+        if (video.readyState >= 3) tryAutoplay();
+        else video.addEventListener('canplay', tryAutoplay, { once: true });
+        return;
+    }
+
     const MAX_SCALE = 25;
-    const BASE_SCALE = window.innerWidth <= 768 ? 0.6 : 1;
     let ticking = false;
 
     function getScrollProgress() {
