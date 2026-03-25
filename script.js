@@ -14,8 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initArsenalSelector();
     initScrollAnimations();
     initGlitchEffects();
-    initVISRMode();
+
     initLightbox();
+    initScrollVideo();
+    initZoomMask();
 });
 
 /**
@@ -164,6 +166,176 @@ function createParticle(container) {
     `;
 
     container.appendChild(particle);
+}
+
+/**
+ * Scroll-Driven Video Playback
+ */
+function initScrollVideo() {
+    const section = document.querySelector('.scroll-video-section');
+    const video = section ? section.querySelector('.scroll-video') : null;
+    if (!section || !video) return;
+
+    // On mobile, skip video init and use text fallback instead
+    if (window.innerWidth <= 768) {
+        initMobilePrologue();
+        return;
+    }
+
+    let videoReady = false;
+    let targetTime = 0;
+    let currentTime = 0;
+    let animating = false;
+    const LERP_FACTOR = 0.12;
+    const SNAP_THRESHOLD = 0.01;
+
+    video.addEventListener('loadedmetadata', () => {
+        videoReady = true;
+        video.pause();
+        targetTime = getScrollProgress() * video.duration;
+        currentTime = targetTime;
+        video.currentTime = currentTime;
+    });
+
+    function getScrollProgress() {
+        const rect = section.getBoundingClientRect();
+        const scrollableDistance = section.offsetHeight - window.innerHeight;
+        const scrolled = -rect.top;
+        return Math.max(0, Math.min(1, scrolled / scrollableDistance));
+    }
+
+    function animate() {
+        if (!videoReady || !video.duration) {
+            animating = false;
+            return;
+        }
+
+        const diff = targetTime - currentTime;
+
+        if (Math.abs(diff) < SNAP_THRESHOLD) {
+            currentTime = targetTime;
+            video.currentTime = currentTime;
+            animating = false;
+            return;
+        }
+
+        currentTime += diff * LERP_FACTOR;
+        if (Math.abs(currentTime - video.currentTime) > 0.016) {
+            video.currentTime = currentTime;
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    function startAnimating() {
+        if (!animating) {
+            animating = true;
+            requestAnimationFrame(animate);
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        if (videoReady && video.duration) {
+            targetTime = getScrollProgress() * video.duration;
+            startAnimating();
+        }
+    }, { passive: true });
+}
+
+/**
+ * Mobile Prologue Text — fade-in on scroll
+ */
+function initMobilePrologue() {
+    const lines = document.querySelectorAll('.prologue-line');
+    if (!lines.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.3 });
+
+    lines.forEach(line => observer.observe(line));
+}
+
+/**
+ * WE ARE ODST - Zoom Mask Effect
+ */
+function initZoomMask() {
+    const section = document.querySelector('.zoom-mask-section');
+    if (!section) return;
+
+    const textEl = section.querySelector('.zoom-mask-text');
+    const video = section.querySelector('.zoom-mask-video');
+    const fadeEl = section.querySelector('.zoom-mask-fade');
+    if (!textEl || !video) return;
+
+    const MAX_SCALE = 25;
+    const BASE_SCALE = window.innerWidth <= 768 ? 0.6 : 1;
+    let ticking = false;
+
+    function getScrollProgress() {
+        const rect = section.getBoundingClientRect();
+        const scrollableDistance = section.offsetHeight - window.innerHeight;
+        const scrolled = -rect.top;
+        return Math.max(0, Math.min(1, scrolled / scrollableDistance));
+    }
+
+    function updateZoom() {
+        const progress = getScrollProgress();
+        const scale = BASE_SCALE * (1 + progress * (MAX_SCALE - 1));
+
+        // Fade out the mask starting at 80% progress, fully gone by 90%
+        const fadeStart = 0.45;
+        const fadeEnd = 0.55;
+        let opacity = 1;
+        if (progress >= fadeStart) {
+            opacity = 1 - Math.min(1, (progress - fadeStart) / (fadeEnd - fadeStart));
+        }
+
+        // Show bottom fade as mask dissolves
+        const fadeGradStart = 0.65;
+        const fadeGradEnd = 0.9;
+        let fadeOpacity = 0;
+        if (progress >= fadeGradStart) {
+            fadeOpacity = Math.min(1, (progress - fadeGradStart) / (fadeGradEnd - fadeGradStart));
+        }
+
+        textEl.style.transform = `scale(${scale})`;
+        textEl.style.opacity = opacity;
+        if (fadeEl) fadeEl.style.opacity = fadeOpacity;
+
+        if (opacity <= 0) {
+            textEl.classList.add('zoom-complete');
+        } else {
+            textEl.classList.remove('zoom-complete');
+        }
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateZoom);
+            ticking = true;
+        }
+    }, { passive: true });
+
+    // Video autoplay (muted)
+    function tryAutoplay() {
+        video.play().catch(() => {
+            document.addEventListener('click', () => video.play(), { once: true });
+        });
+    }
+
+    if (video.readyState >= 3) {
+        tryAutoplay();
+    } else {
+        video.addEventListener('canplay', tryAutoplay, { once: true });
+    }
+
 }
 
 /**
@@ -731,51 +903,6 @@ function initGlitchEffects() {
     }, 3000);
 }
 
-/**
- * VISR Mode Toggle
- */
-function initVISRMode() {
-    let visrActive = false;
-
-    // Double-click anywhere to toggle VISR mode
-    document.addEventListener('dblclick', (e) => {
-        if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
-
-        visrActive = !visrActive;
-
-        if (visrActive) {
-            enableVISR();
-        } else {
-            disableVISR();
-        }
-    });
-
-    function enableVISR() {
-        document.body.style.filter = 'sepia(30%) saturate(150%) brightness(90%)';
-
-        // Highlight interactive elements
-        const interactiveElements = document.querySelectorAll('button, a, .squad-member, .gear-item');
-        interactiveElements.forEach((el) => {
-            el.style.outline = '1px solid var(--color-visr-yellow)';
-            el.style.outlineOffset = '2px';
-        });
-
-        // Show notification
-        showNotification('VISR MODE ACTIVATED', 'var(--color-visr-yellow)');
-    }
-
-    function disableVISR() {
-        document.body.style.filter = '';
-
-        const interactiveElements = document.querySelectorAll('button, a, .squad-member, .gear-item');
-        interactiveElements.forEach((el) => {
-            el.style.outline = '';
-            el.style.outlineOffset = '';
-        });
-
-        showNotification('VISR MODE DEACTIVATED', 'var(--color-text-dim)');
-    }
-}
 
 /**
  * Notification Toast
@@ -837,7 +964,7 @@ function enableMouseTrail() {
     if (mouseTrailEnabled) return;
     mouseTrailEnabled = true;
 
-    showNotification('SPARTAN LASER ACTIVATED', 'var(--color-visr-red)');
+    showNotification('SPARTAN LASER ACTIVATED', '#ff3333');
 
     document.addEventListener('mousemove', (e) => {
         const trail = document.createElement('div');
@@ -845,13 +972,13 @@ function enableMouseTrail() {
             position: fixed;
             width: 8px;
             height: 8px;
-            background: var(--color-visr-red);
+            background: #ff3333;
             border-radius: 50%;
             pointer-events: none;
             z-index: 9998;
             left: ${e.clientX - 4}px;
             top: ${e.clientY - 4}px;
-            box-shadow: 0 0 10px var(--color-visr-red);
+            box-shadow: 0 0 10px #ff3333;
             transition: all 0.5s ease;
         `;
         document.body.appendChild(trail);
@@ -958,7 +1085,7 @@ function initScrollProgress() {
         top: 0;
         left: 0;
         height: 3px;
-        background: linear-gradient(90deg, #153146, var(--color-secondary));
+        background: linear-gradient(90deg, #153146, #60a3be);
         z-index: 10001;
         width: 0%;
         transition: width 0.1s ease;

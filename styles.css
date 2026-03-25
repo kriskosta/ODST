@@ -11,10 +11,6 @@
     --color-primary: #ffd700;
     --color-primary-dim: #b8960a;
     --color-secondary: #00d4ff;
-    --color-visr-yellow: #ffcc00;
-    --color-visr-red: #ff3333;
-    --color-visr-green: #33ff66;
-    --color-visr-blue: #3399ff;
     --color-text: #e8e8e8;
     --color-text-dim: #888899;
     --color-glass: rgba(255, 255, 255, 0.05);
@@ -63,7 +59,7 @@ body {
     );
 }
 
-/* VISR HUD Overlay - only shown in loading screen */
+/* Loading Screen Corner Accents */
 .loading-screen .visr-overlay {
     position: absolute;
     top: 0;
@@ -78,8 +74,7 @@ body {
     position: absolute;
     width: 100px;
     height: 100px;
-    border: 2px solid var(--color-visr-yellow);
-    opacity: 0.3;
+    border: 2px solid rgba(255, 204, 0, 0.3);
 }
 
 .loading-screen .visr-corner.top-left {
@@ -128,6 +123,16 @@ body {
     border-bottom: 1px solid var(--color-glass-border);
 }
 
+.nav.scrolled .btn-enlist {
+    border-color: #19708e;
+    color: #19708e;
+}
+
+.nav.scrolled .btn-enlist:hover {
+    color: var(--color-bg-dark);
+    border-color: #dcdcdc;
+}
+
 .nav-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -164,25 +169,18 @@ body {
     transition: color var(--transition-fast);
 }
 
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--color-primary);
-    transition: width var(--transition-medium);
-}
-
 .nav-link:hover,
 .nav-link.active {
-    color: #ffffff;
+    color: #dcdcdc;
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
+.nav.scrolled .nav-link {
+    color: #19708e;
+}
+
+.nav.scrolled .nav-link:hover,
+.nav.scrolled .nav-link.active {
+    color: #dcdcdc;
 }
 
 .btn-enlist {
@@ -209,13 +207,14 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: #ffffff;
+    background: #dcdcdc;
     transition: left var(--transition-medium);
     z-index: -1;
 }
 
 .btn-enlist:hover {
     color: var(--color-bg-dark);
+    border-color: #dcdcdc;
 }
 
 .btn-enlist:hover::before {
@@ -266,6 +265,7 @@ body {
     position: relative;
     overflow: hidden;
     min-height: 100vh;
+    margin-bottom: 15vh;
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -289,7 +289,7 @@ body {
     left: 0;
     width: 100%;
     height: 70%;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 50%, #0a0a0c 100%);
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 50%, #000000 100%);
     z-index: 6;
     pointer-events: none;
 }
@@ -519,10 +519,120 @@ body {
 
 
 /* ==========================================
+   SCROLL-DRIVEN VIDEO SECTION
+   ========================================== */
+.scroll-video-section {
+    position: relative;
+    height: 500vh;
+    background: var(--color-bg-dark);
+}
+
+.scroll-video-sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+}
+
+/* Mobile Prologue Fallback (hidden on desktop) */
+.scroll-video-mobile-fallback {
+    display: none;
+}
+
+/* ==========================================
+   WE ARE ODST - ZOOM MASK SECTION
+   ========================================== */
+.zoom-mask-section {
+    position: relative;
+    height: 200vh;
+    background: #000000;
+}
+
+.zoom-mask-sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zoom-mask-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    filter: brightness(1.6) contrast(1.1);
+}
+
+.zoom-mask-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 50%, #000000 85%, #000000 100%);
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.zoom-mask-perspective {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.zoom-mask-text {
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+    transform: scale(1);
+    transform-origin: center center;
+}
+
+.zoom-mask-text svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.zoom-mask-text.zoom-complete {
+    visibility: hidden;
+}
+
+
+/* ==========================================
    TICKER SECTION
    ========================================== */
 .ticker-section {
-    background: var(--color-bg-dark);
+    background: #000000;
     padding: 80px 0;
     overflow: hidden;
     position: relative;
@@ -917,7 +1027,7 @@ body {
 
 /* Story Section */
 .story {
-    background: #050508;
+    background: #000000;
     overflow: hidden;
 }
 
@@ -948,7 +1058,7 @@ body {
 }
 
 .story-bg {
-    background: #050508;
+    background: #000000;
 }
 
 /* Mission Layout */
@@ -1391,38 +1501,19 @@ body {
 
 /* Squad Section */
 .squad {
-    background: var(--color-bg-dark);
+    background: #000000;
 }
 
 .squad-bg {
-    background:
-        linear-gradient(180deg, var(--color-bg-medium) 0%, transparent 20%, transparent 80%, var(--color-bg-medium) 100%),
-        radial-gradient(ellipse at 70% 30%, rgba(255, 204, 0, 0.08) 0%, transparent 50%);
+    background: #000000;
 }
 
-/* Squad Background Image */
 .squad-bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    opacity: 0.15;
-    filter: blur(3px) grayscale(50%);
-    z-index: 0;
+    display: none;
 }
 
 .squad-bg::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, var(--color-bg-dark) 0%, rgba(10, 10, 12, 0.8) 20%, rgba(10, 10, 12, 0.8) 80%, var(--color-bg-dark) 100%);
-    z-index: 1;
+    display: none;
 }
 
 .squad-intro {
@@ -1653,37 +1744,28 @@ body {
    ARSENAL SECTION
    ========================================== */
 .arsenal {
-    background: var(--color-bg-dark);
+    background: #000000;
 }
 
 .arsenal-bg {
-    background:
-        linear-gradient(180deg, var(--color-bg-dark) 0%, transparent 20%, transparent 80%, var(--color-bg-dark) 100%),
-        radial-gradient(ellipse at 20% 80%, rgba(51, 153, 255, 0.1) 0%, transparent 50%);
+    background: #000000;
 }
 
 .arsenal-bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    opacity: 0.1;
-    filter: blur(2px) grayscale(60%);
-    z-index: 0;
+    display: none;
 }
 
 .arsenal-bg::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(180deg, var(--color-bg-dark) 0%, rgba(10, 10, 12, 0.9) 20%, rgba(10, 10, 12, 0.9) 80%, var(--color-bg-dark) 100%);
-    z-index: 1;
+    display: none;
+}
+
+.mission-oni-logo,
+.squad-emblem-logo,
+.arsenal-unsc-logo {
+    height: 90px;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+    object-fit: contain;
 }
 
 .arsenal-selector {
@@ -1855,10 +1937,10 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    background: linear-gradient(90deg, #153146, var(--color-secondary));
+    background: linear-gradient(90deg, #153146, #60a3be);
     border-radius: 3px;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
+    box-shadow: 0 0 8px rgba(96, 163, 190, 0.5);
 }
 
 /* Weapon Image (Right Side) */
@@ -2499,12 +2581,11 @@ body {
 .mcc-cta {
     display: flex;
     justify-content: center;
+    gap: 1.5rem;
     margin-top: 3rem;
 }
 
 .mcc-buy-btn {
-    background: linear-gradient(180deg, #75af23 0%, #598b1b 100%);
-    border: none;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -2512,8 +2593,6 @@ body {
 }
 
 .mcc-buy-btn:hover {
-    background: linear-gradient(180deg, #8bc62e 0%, #6aa21f 100%);
-    box-shadow: 0 10px 30px rgba(117, 175, 35, 0.4);
 }
 
 /* Responsive MCC Grid */
@@ -2639,6 +2718,13 @@ body {
 
     .mcc-cta {
         margin-top: 2rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mcc-cta .btn-primary {
+        width: 100%;
+        max-width: 280px;
     }
 }
 
@@ -2667,6 +2753,12 @@ body {
     align-items: center;
     gap: 2rem;
     text-align: center;
+}
+
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .footer-logo .logo-text {
@@ -2765,7 +2857,7 @@ body {
 
 .glitch::before {
     animation: glitch-1 2s infinite linear alternate-reverse;
-    color: var(--color-visr-red);
+    color: #ff3333;
     z-index: -1;
 }
 
@@ -2844,7 +2936,7 @@ body {
 
 .loading-progress {
     height: 100%;
-    background: linear-gradient(90deg, #cc8800, var(--color-visr-yellow), #ffdd44);
+    background: linear-gradient(90deg, #cc8800, #ffcc00, #ffdd44);
     box-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
     width: 0;
     animation: load 2s ease-in-out forwards;
@@ -3057,14 +3149,80 @@ body {
         width: 100%;
         max-width: 280px;
     }
+
+    /* Scroll Video → Mobile Prologue Text */
+    .scroll-video-section {
+        height: auto;
+    }
+
+    .scroll-video-sticky {
+        display: none;
+    }
+
+    .scroll-video-mobile-fallback {
+        display: block;
+        position: relative;
+        background-image: url('images/prologue_background.gif');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 6rem 2rem;
+        text-align: left;
+    }
+
+    .scroll-video-mobile-fallback::before,
+    .scroll-video-mobile-fallback::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 30%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .scroll-video-mobile-fallback::before {
+        top: 0;
+        background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+    }
+
+    .scroll-video-mobile-fallback::after {
+        bottom: 0;
+        background: linear-gradient(to top, #000000 0%, transparent 100%);
+    }
+
+    .prologue-line {
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #aeb4ba;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.15);
+        margin-bottom: 0.3rem;
+        display: inline;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+    }
+
+    .prologue-line.visible {
+        opacity: 1;
+    }
+
+    .prologue-line.prologue-emphasis {
+        font-weight: 600;
+    }
+
+    /* Zoom Mask — Mobile */
+    .zoom-mask-section {
+        height: 150vh;
+    }
+
+    .zoom-mask-text {
+        transform: scale(0.6);
+    }
 }
 
 /* Extra small screens */
 @media (max-width: 480px) {
-    .visr-corner {
-        display: none;
-    }
-
     .hero-content {
         padding: 0 1rem;
     }
@@ -3092,7 +3250,6 @@ body {
 /* Print styles */
 @media print {
     .scanlines,
-    .visr-overlay,
     .particles,
     .rain,
     .scroll-indicator {
@@ -3145,10 +3302,10 @@ button:focus-visible {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-primary-dim);
+    background: #1b7c9e;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary);
+    background: #23a0cc;
 }
