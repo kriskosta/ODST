@@ -205,17 +205,39 @@ function initScrollVideo() {
     }, { threshold: 0 });
     visibilityObserver.observe(section);
 
+    // Loading progress bar
+    const progressBar = document.createElement('div');
+    progressBar.style.cssText = 'position:absolute;bottom:0;left:0;height:2px;background:rgba(255,255,255,0.5);z-index:10;transition:opacity 0.5s;width:0%';
+    section.querySelector('.scroll-video-sticky').appendChild(progressBar);
+
     // Preload entire video into memory to eliminate network seek stalls
     const videoSrc = video.src;
     fetch(videoSrc)
-        .then(res => res.blob())
+        .then(res => {
+            const contentLength = +res.headers.get('Content-Length');
+            if (!contentLength || !res.body) return res.blob();
+            const reader = res.body.getReader();
+            const chunks = [];
+            let received = 0;
+            function read() {
+                return reader.read().then(({ done, value }) => {
+                    if (done) return new Blob(chunks, { type: 'video/mp4' });
+                    chunks.push(value);
+                    received += value.length;
+                    progressBar.style.width = (received / contentLength * 100) + '%';
+                    return read();
+                });
+            }
+            return read();
+        })
         .then(blob => {
             video.src = URL.createObjectURL(blob);
-            // loadedmetadata fires after blob src is assigned
+            progressBar.style.opacity = '0';
+            setTimeout(() => progressBar.remove(), 500);
         })
         .catch(() => {
-            // Fallback: use original src with progressive download
             video.src = videoSrc;
+            progressBar.remove();
         });
 
     video.addEventListener('loadedmetadata', () => {
