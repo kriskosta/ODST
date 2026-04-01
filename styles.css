@@ -3170,9 +3170,10 @@ body {
         display: none;
     }
 
-    /* Prologue — mobile padding */
+    /* Prologue — mobile */
     .prologue-section {
         padding: 6rem 2rem;
+        background-image: url('images/videos/prologue-mobile-poster.jpg');
     }
 
     .prologue-line {
