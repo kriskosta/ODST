@@ -197,10 +197,17 @@ function initPrologue() {
     lines.forEach(line => textObserver.observe(line));
 
     // Background video play/pause on visibility
-    const video = section ? section.querySelector('.prologue-bg-video') : null;
+    const isMobile = window.innerWidth <= 768;
+    const video = section.querySelector(isMobile ? '.prologue-bg-mobile' : '.prologue-bg-desktop');
     if (!video) return;
 
     const playVideo = () => video.play().catch(() => {});
+
+    if (video.readyState >= 2) {
+        playVideo();
+    } else {
+        video.addEventListener('loadeddata', () => playVideo(), { once: true });
+    }
 
     const videoObserver = new IntersectionObserver((entries) => {
         entries.forEach(e => {
@@ -211,6 +218,7 @@ function initPrologue() {
     videoObserver.observe(section);
 
     document.addEventListener('click', () => playVideo(), { once: true });
+    document.addEventListener('touchstart', () => playVideo(), { once: true });
 }
 
 /**

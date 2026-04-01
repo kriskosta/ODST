@@ -545,6 +545,10 @@ body {
     opacity: 0.4;
 }
 
+.prologue-bg-mobile {
+    display: none;
+}
+
 .prologue-content {
     position: relative;
     z-index: 2;
@@ -3166,16 +3170,16 @@ body {
         display: none;
     }
 
-    /* Prologue — mobile: use gif background instead of video */
-    .prologue-bg-video {
+    /* Prologue — mobile: swap to mobile video */
+    .prologue-bg-desktop {
         display: none;
     }
 
+    .prologue-bg-mobile {
+        display: block;
+    }
+
     .prologue-section {
-        background-image: url('images/prologue_background_mobile.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
         padding: 6rem 2rem;
     }
 
