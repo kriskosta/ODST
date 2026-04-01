@@ -550,17 +550,12 @@ function initSquadCarousel() {
     function updateIndexFromScroll() {
         const memberWidth = members[0].offsetWidth + 32;
         const newIndex = Math.round(carousel.scrollLeft / memberWidth);
-        if (newIndex !== currentIndex && newIndex >= 0 && newIndex < members.length) {
-            currentIndex = newIndex;
-            // Update dots
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentIndex);
-            });
-            // Update active member styling
-            members.forEach((member, index) => {
-                member.classList.toggle('active', index === currentIndex);
-            });
+        const clampedIndex = Math.max(0, Math.min(newIndex, members.length - 1));
+        if (clampedIndex !== currentIndex) {
+            currentIndex = clampedIndex;
         }
+        // Snap to nearest card
+        updateCarousel();
     }
 
     function goToSlide(index) {
@@ -613,7 +608,7 @@ function initSquadCarousel() {
         if (!isDragging) return;
         e.preventDefault();
         const x = e.pageX - carousel.offsetLeft;
-        const walk = (x - startX) * 1.5; // Scroll speed multiplier
+        const walk = (x - startX) * 1.2;
         carousel.scrollLeft = scrollLeft - walk;
     });
 
@@ -638,7 +633,7 @@ function initSquadCarousel() {
     carousel.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
         const x = e.touches[0].pageX - carousel.offsetLeft;
-        const walk = (x - startX) * 1.5;
+        const walk = (x - startX) * 1.2;
         carousel.scrollLeft = scrollLeft - walk;
     }, { passive: true });
 

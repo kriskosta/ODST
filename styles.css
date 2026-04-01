@@ -1568,6 +1568,7 @@ body {
 .squad-carousel.dragging {
     scroll-behavior: auto;
     scroll-snap-type: none;
+    cursor: grabbing;
 }
 
 .squad-carousel::-webkit-scrollbar {
@@ -1614,6 +1615,9 @@ body {
     border: 2px solid var(--color-glass-border);
     transition: all var(--transition-medium);
     filter: grayscale(30%) brightness(0.9);
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
 }
 
 .squad-member:hover .member-portrait {
