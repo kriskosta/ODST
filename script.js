@@ -196,30 +196,21 @@ function initPrologue() {
 
     lines.forEach(line => textObserver.observe(line));
 
-    // Background video play/pause on visibility
-    const isMobile = window.innerWidth <= 768;
-    const video = section.querySelector(isMobile ? '.prologue-bg-mobile' : '.prologue-bg-desktop');
-    const hiddenVideo = section.querySelector(isMobile ? '.prologue-bg-desktop' : '.prologue-bg-mobile');
+    // Background video — set correct src based on screen size then play
+    const video = section.querySelector('.prologue-bg-video');
     if (!video) return;
 
-    // Prevent hidden video from loading
-    if (hiddenVideo) {
-        hiddenVideo.removeAttribute('src');
-        hiddenVideo.load();
-    }
+    const isMobile = window.innerWidth <= 768;
+    const src = video.getAttribute(isMobile ? 'data-src-mobile' : 'data-src-desktop');
+    const poster = video.getAttribute(isMobile ? 'data-poster-mobile' : 'data-poster-desktop');
 
-    // Force load the active video (may not have loaded if it was display:none at parse time)
-    if (video.readyState < 2) {
-        video.load();
-    }
+    video.poster = poster;
+    video.src = src;
+    video.load();
 
     const playVideo = () => video.play().catch(() => {});
 
-    if (video.readyState >= 2) {
-        playVideo();
-    } else {
-        video.addEventListener('canplay', () => playVideo(), { once: true });
-    }
+    video.addEventListener('canplay', () => playVideo(), { once: true });
 
     const videoObserver = new IntersectionObserver((entries) => {
         entries.forEach(e => {
@@ -229,6 +220,7 @@ function initPrologue() {
     }, { threshold: 0.1 });
     videoObserver.observe(section);
 
+    // Mobile autoplay fallbacks — user interaction triggers
     document.addEventListener('click', () => playVideo(), { once: true });
     document.addEventListener('touchstart', () => playVideo(), { once: true });
     window.addEventListener('scroll', () => playVideo(), { once: true });

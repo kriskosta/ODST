@@ -529,7 +529,7 @@ body {
 /* Prologue Section */
 .prologue-section {
     position: relative;
-    background: #000000;
+    background: #000000 url('images/videos/prologue-desktop-poster.jpg') center / cover no-repeat;
     padding: 14rem 2rem;
     overflow: hidden;
 }
@@ -543,10 +543,6 @@ body {
     object-fit: cover;
     z-index: 0;
     opacity: 0.4;
-}
-
-.prologue-bg-mobile {
-    display: none;
 }
 
 .prologue-content {
@@ -3174,15 +3170,7 @@ body {
         display: none;
     }
 
-    /* Prologue — mobile: swap to mobile video */
-    .prologue-bg-desktop {
-        display: none;
-    }
-
-    .prologue-bg-mobile {
-        display: block;
-    }
-
+    /* Prologue — mobile padding */
     .prologue-section {
         padding: 6rem 2rem;
     }
