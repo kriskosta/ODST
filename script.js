@@ -196,9 +196,15 @@ function initPrologue() {
 
     lines.forEach(line => textObserver.observe(line));
 
-    // Background video play/pause on visibility
+    // Background video
     const video = section.querySelector('.prologue-bg-video');
     if (!video) return;
+
+    // On desktop, swap to higher quality video
+    if (window.innerWidth > 768) {
+        video.src = 'images/videos/PROLOGUE_BACKGROUND_DESKTOP.mp4';
+        video.poster = 'images/videos/prologue-desktop-poster.jpg';
+    }
 
     const playVideo = () => video.play().catch(() => {});
 
