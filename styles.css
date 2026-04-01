@@ -124,8 +124,8 @@ body {
 }
 
 .nav.scrolled .btn-enlist {
-    border-color: #19708e;
-    color: #19708e;
+    border-color: #314d6d;
+    color: #314d6d;
 }
 
 .nav.scrolled .btn-enlist:hover {
@@ -175,7 +175,7 @@ body {
 }
 
 .nav.scrolled .nav-link {
-    color: #19708e;
+    color: #314d6d;
 }
 
 .nav.scrolled .nav-link:hover,
@@ -345,6 +345,10 @@ body {
     width: auto;
     opacity: 0.7;
     filter: brightness(0) invert(1);
+}
+
+.platform-logo:first-child {
+    height: 32px;
 }
 
 .badge-text {
@@ -540,9 +544,10 @@ body {
 }
 
 .scroll-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 1920px;
+    height: 1080px;
+    max-width: 100%;
+    object-fit: contain;
 }
 
 /* Mobile Prologue Fallback (hidden on desktop) */
@@ -3314,10 +3319,10 @@ button:focus-visible {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1b7c9e;
+    background: #314d6d;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #23a0cc;
+    background: #4a6f8f;
 }
