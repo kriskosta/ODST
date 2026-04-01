@@ -530,7 +530,7 @@ body {
 .prologue-section {
     position: relative;
     background: #000000;
-    padding: 8rem 2rem;
+    padding: 14rem 2rem;
     overflow: hidden;
 }
 
@@ -576,8 +576,8 @@ body {
 
 .prologue-line {
     font-family: var(--font-body);
-    font-size: 1.25rem;
-    line-height: 2;
+    font-size: 1.5rem;
+    line-height: 2.2;
     color: #aeb4ba;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.15);
     margin-bottom: 0.3rem;
@@ -605,7 +605,7 @@ body {
 .trailer-video-wrapper {
     position: relative;
     width: 100%;
-    height: 60vh;
+    height: 85vh;
     overflow: hidden;
 }
 
@@ -3182,6 +3182,11 @@ body {
     .prologue-line {
         font-size: 1.1rem;
         line-height: 1.8;
+    }
+
+    /* Trailer section — restore mobile height */
+    .trailer-video-wrapper {
+        height: 60vh;
     }
 
     /* Hero platforms — stack vertically on mobile */

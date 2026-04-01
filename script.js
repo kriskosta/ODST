@@ -176,13 +176,15 @@ function createParticle(container) {
  * Scroll-Driven Video Playback
  */
 /**
- * Prologue Text — fade-in on scroll (all screen sizes)
+ * Prologue Text — fade-in on scroll (all screen sizes) + background video playback
  */
 function initPrologue() {
+    const section = document.querySelector('.prologue-section');
     const lines = document.querySelectorAll('.prologue-line');
     if (!lines.length) return;
 
-    const observer = new IntersectionObserver((entries) => {
+    // Text fade-in
+    const textObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
@@ -192,7 +194,23 @@ function initPrologue() {
         });
     }, { threshold: 0.3 });
 
-    lines.forEach(line => observer.observe(line));
+    lines.forEach(line => textObserver.observe(line));
+
+    // Background video play/pause on visibility
+    const video = section ? section.querySelector('.prologue-bg-video') : null;
+    if (!video) return;
+
+    const playVideo = () => video.play().catch(() => {});
+
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) playVideo();
+            else video.pause();
+        });
+    }, { threshold: 0.1 });
+    videoObserver.observe(section);
+
+    document.addEventListener('click', () => playVideo(), { once: true });
 }
 
 /**
