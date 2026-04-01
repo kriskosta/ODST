@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initGlitchEffects();
 
     initLightbox();
-    initScrollVideo();
-    initZoomMask();
+    initPrologue();
+    initTrailerVideo();
 });
 
 /**
@@ -175,99 +175,10 @@ function createParticle(container) {
 /**
  * Scroll-Driven Video Playback
  */
-function initScrollVideo() {
-    const section = document.querySelector('.scroll-video-section');
-    const video = section ? section.querySelector('.scroll-video') : null;
-    if (!section || !video) return;
-
-    // On mobile, skip video init and use text fallback instead
-    if (window.innerWidth <= 768) {
-        initMobilePrologue();
-        return;
-    }
-
-    let videoReady = false;
-    let isVisible = false;
-    let ticking = false;
-
-    // Cache section geometry — avoid layout recalc on every scroll
-    let sectionTop = section.offsetTop;
-    let scrollableDistance = section.offsetHeight - window.innerHeight;
-    window.addEventListener('resize', () => {
-        sectionTop = section.offsetTop;
-        scrollableDistance = section.offsetHeight - window.innerHeight;
-    });
-
-    // Visibility gating — skip work when offscreen
-    const visibilityObserver = new IntersectionObserver((entries) => {
-        isVisible = entries[0].isIntersecting;
-        if (isVisible && videoReady) updateFrame();
-    }, { threshold: 0 });
-    visibilityObserver.observe(section);
-
-    // Loading progress bar
-    const progressBar = document.createElement('div');
-    progressBar.style.cssText = 'position:absolute;bottom:0;left:0;height:2px;background:rgba(255,255,255,0.5);z-index:10;transition:opacity 0.5s;width:0%';
-    section.querySelector('.scroll-video-sticky').appendChild(progressBar);
-
-    // Preload entire video into memory to eliminate network seek stalls
-    const videoSrc = video.src;
-    fetch(videoSrc)
-        .then(res => {
-            const contentLength = +res.headers.get('Content-Length');
-            if (!contentLength || !res.body) return res.blob();
-            const reader = res.body.getReader();
-            const chunks = [];
-            let received = 0;
-            function read() {
-                return reader.read().then(({ done, value }) => {
-                    if (done) return new Blob(chunks, { type: 'video/mp4' });
-                    chunks.push(value);
-                    received += value.length;
-                    progressBar.style.width = (received / contentLength * 100) + '%';
-                    return read();
-                });
-            }
-            return read();
-        })
-        .then(blob => {
-            video.src = URL.createObjectURL(blob);
-            progressBar.style.opacity = '0';
-            setTimeout(() => progressBar.remove(), 500);
-        })
-        .catch(() => {
-            video.src = videoSrc;
-            progressBar.remove();
-        });
-
-    video.addEventListener('loadedmetadata', () => {
-        videoReady = true;
-        video.pause();
-        updateFrame();
-    });
-
-    function getScrollProgress() {
-        const scrolled = window.scrollY - sectionTop;
-        return Math.max(0, Math.min(1, scrolled / scrollableDistance));
-    }
-
-    function updateFrame() {
-        if (!videoReady || !video.duration) return;
-        video.currentTime = getScrollProgress() * video.duration;
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!isVisible || !videoReady || ticking) return;
-        ticking = true;
-        requestAnimationFrame(updateFrame);
-    }, { passive: true });
-}
-
 /**
- * Mobile Prologue Text — fade-in on scroll
+ * Prologue Text — fade-in on scroll (all screen sizes)
  */
-function initMobilePrologue() {
+function initPrologue() {
     const lines = document.querySelectorAll('.prologue-line');
     if (!lines.length) return;
 
@@ -285,101 +196,26 @@ function initMobilePrologue() {
 }
 
 /**
- * WE ARE ODST - Zoom Mask Effect
+ * WE ARE ODST - Trailer Video (play/pause on visibility)
  */
-function initZoomMask() {
-    const section = document.querySelector('.zoom-mask-section');
-    if (!section) return;
+function initTrailerVideo() {
+    const section = document.querySelector('.trailer-section');
+    const video = section ? section.querySelector('.trailer-video') : null;
+    if (!section || !video) return;
 
-    const textEl = section.querySelector('.zoom-mask-text');
-    const video = section.querySelector('.zoom-mask-video');
-    const fadeEl = section.querySelector('.zoom-mask-fade');
-    if (!textEl || !video) return;
+    const playVideo = () => video.play().catch(() => {});
 
-    // On mobile, mask is hidden — play video when visible, no zoom effect
-    if (window.innerWidth <= 768) {
-        const playVideo = () => video.play().catch(() => {});
-        // Play/pause based on visibility (helps mobile autoplay restrictions)
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) playVideo();
-                else video.pause();
-            });
-        }, { threshold: 0.25 });
-        io.observe(section);
-        // Also try on first user interaction as fallback
-        document.addEventListener('touchstart', () => playVideo(), { once: true });
-        return;
-    }
-
-    const MAX_SCALE = 25;
-    let ticking = false;
-    let isVisible = false;
-
-    // Play/pause video based on visibility
-    const visibilityObserver = new IntersectionObserver((entries) => {
-        isVisible = entries[0].isIntersecting;
-        if (isVisible) {
-            video.play().catch(() => {});
-        } else {
-            video.pause();
-        }
-    }, { threshold: 0.1 });
-    visibilityObserver.observe(section);
-
-    function getScrollProgress() {
-        const rect = section.getBoundingClientRect();
-        const scrollableDistance = section.offsetHeight - window.innerHeight;
-        const scrolled = -rect.top;
-        return Math.max(0, Math.min(1, scrolled / scrollableDistance));
-    }
-
-    function updateZoom() {
-        const progress = getScrollProgress();
-        const scale = 1 + progress * (MAX_SCALE - 1);
-
-        // Fade out the mask starting at 80% progress, fully gone by 90%
-        const fadeStart = 0.45;
-        const fadeEnd = 0.55;
-        let opacity = 1;
-        if (progress >= fadeStart) {
-            opacity = 1 - Math.min(1, (progress - fadeStart) / (fadeEnd - fadeStart));
-        }
-
-        // Show bottom fade as mask dissolves
-        const fadeGradStart = 0.65;
-        const fadeGradEnd = 0.9;
-        let fadeOpacity = 0;
-        if (progress >= fadeGradStart) {
-            fadeOpacity = Math.min(1, (progress - fadeGradStart) / (fadeGradEnd - fadeGradStart));
-        }
-
-        textEl.style.transform = `scale(${scale})`;
-        textEl.style.opacity = opacity;
-        if (fadeEl) fadeEl.style.opacity = fadeOpacity;
-
-        if (opacity <= 0) {
-            textEl.classList.add('zoom-complete');
-        } else {
-            textEl.classList.remove('zoom-complete');
-        }
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-        if (!isVisible) return;
-        if (!ticking) {
-            requestAnimationFrame(updateZoom);
-            ticking = true;
-        }
-    }, { passive: true });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) playVideo();
+            else video.pause();
+        });
+    }, { threshold: 0.25 });
+    observer.observe(section);
 
     // Fallback autoplay on first user interaction
-    document.addEventListener('click', () => {
-        if (isVisible) video.play().catch(() => {});
-    }, { once: true });
-
+    document.addEventListener('click', () => playVideo(), { once: true });
+    document.addEventListener('touchstart', () => playVideo(), { once: true });
 }
 
 /**

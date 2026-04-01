@@ -526,110 +526,113 @@ body {
 /* ==========================================
    SCROLL-DRIVEN VIDEO SECTION
    ========================================== */
-.scroll-video-section {
+/* Prologue Section */
+.prologue-section {
     position: relative;
-    height: 500vh;
-    background: var(--color-bg-dark);
-}
-
-.scroll-video-sticky {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.scroll-video {
-    width: 1920px;
-    height: 1080px;
-    max-width: 100%;
-    object-fit: contain;
-}
-
-/* Mobile Prologue Fallback (hidden on desktop) */
-.scroll-video-mobile-fallback {
-    display: none;
-}
-
-/* ==========================================
-   WE ARE ODST - ZOOM MASK SECTION
-   ========================================== */
-.zoom-mask-section {
-    position: relative;
-    height: 200vh;
     background: #000000;
-}
-
-.zoom-mask-sticky {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100vh;
+    padding: 8rem 2rem;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-.zoom-mask-video {
+.prologue-bg-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 1;
-    filter: brightness(1.6) contrast(1.1);
+    z-index: 0;
+    opacity: 0.4;
 }
 
-.zoom-mask-fade {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 70%;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 50%, #000000 85%, #000000 100%);
-    z-index: 3;
-    pointer-events: none;
-    opacity: 0;
-}
-
-.zoom-mask-perspective {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.prologue-content {
+    position: relative;
     z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.prologue-section::before,
+.prologue-section::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.prologue-section::before {
+    top: 0;
+    background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+}
+
+.prologue-section::after {
+    bottom: 0;
+    background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+
+.prologue-line {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    line-height: 2;
+    color: #aeb4ba;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.15);
+    margin-bottom: 0.3rem;
+    display: inline;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.prologue-line.visible {
+    opacity: 1;
+}
+
+.prologue-line.prologue-emphasis {
+    font-weight: 600;
+}
+
+/* ==========================================
+   WE ARE ODST - TRAILER VIDEO SECTION
+   ========================================== */
+.trailer-section {
+    position: relative;
+    background: #000000;
+}
+
+.trailer-video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 60vh;
     overflow: hidden;
 }
 
-.zoom-mask-text {
+.trailer-video {
     width: 100%;
     height: 100%;
-    will-change: transform;
-    transform: scale(1);
-    transform-origin: center center;
+    object-fit: cover;
 }
 
-.zoom-mask-text svg {
-    display: block;
-    width: 100%;
-    height: 100%;
+.trailer-fade-top,
+.trailer-fade-bottom {
     position: absolute;
-    top: 0;
     left: 0;
+    width: 100%;
+    height: 30%;
+    pointer-events: none;
+    z-index: 2;
 }
 
-.zoom-mask-text.zoom-complete {
-    visibility: hidden;
+.trailer-fade-top {
+    top: 0;
+    background: linear-gradient(to bottom, #000000, transparent);
+}
+
+.trailer-fade-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, #000000, transparent);
 }
 
 
@@ -3163,65 +3166,22 @@ body {
         display: none;
     }
 
-    /* Scroll Video → Mobile Prologue Text */
-    .scroll-video-section {
-        height: auto;
-    }
-
-    .scroll-video-sticky {
+    /* Prologue — mobile: use gif background instead of video */
+    .prologue-bg-video {
         display: none;
     }
 
-    .scroll-video-mobile-fallback {
-        display: block;
-        position: relative;
+    .prologue-section {
         background-image: url('images/prologue_background_mobile.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         padding: 6rem 2rem;
-        text-align: left;
-    }
-
-    .scroll-video-mobile-fallback::before,
-    .scroll-video-mobile-fallback::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        width: 100%;
-        height: 30%;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .scroll-video-mobile-fallback::before {
-        top: 0;
-        background: linear-gradient(to bottom, #000000 0%, transparent 100%);
-    }
-
-    .scroll-video-mobile-fallback::after {
-        bottom: 0;
-        background: linear-gradient(to top, #000000 0%, transparent 100%);
     }
 
     .prologue-line {
-        font-family: var(--font-body);
         font-size: 1.1rem;
         line-height: 1.8;
-        color: #aeb4ba;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.15);
-        margin-bottom: 0.3rem;
-        display: inline;
-        opacity: 0;
-        transition: opacity 0.8s ease;
-    }
-
-    .prologue-line.visible {
-        opacity: 1;
-    }
-
-    .prologue-line.prologue-emphasis {
-        font-weight: 600;
     }
 
     /* Hero platforms — stack vertically on mobile */
@@ -3230,44 +3190,6 @@ body {
         gap: 0.8rem;
     }
 
-    /* Zoom Mask — Mobile: hide mask, show video with fades */
-    .zoom-mask-section {
-        height: auto;
-    }
-
-    .zoom-mask-sticky {
-        position: relative;
-        height: 60vh;
-    }
-
-    .zoom-mask-perspective {
-        display: none;
-    }
-
-    .zoom-mask-video {
-        filter: none;
-    }
-
-    .zoom-mask-sticky::before,
-    .zoom-mask-sticky::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        width: 100%;
-        height: 30%;
-        z-index: 4;
-        pointer-events: none;
-    }
-
-    .zoom-mask-sticky::before {
-        top: 0;
-        background: linear-gradient(to bottom, #000000, transparent);
-    }
-
-    .zoom-mask-sticky::after {
-        bottom: 0;
-        background: linear-gradient(to top, #000000, transparent);
-    }
 }
 
 /* Extra small screens */
