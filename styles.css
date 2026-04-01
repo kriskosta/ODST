@@ -3118,6 +3118,12 @@ body {
         display: none;
     }
 
+    .hero {
+        min-height: 100vh;
+        height: 100vh;
+        margin-bottom: 0;
+    }
+
     .hero-bg {
         background-position: center, center;
         background-size: cover, cover;
