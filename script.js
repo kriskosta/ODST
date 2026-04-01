@@ -199,14 +199,26 @@ function initPrologue() {
     // Background video play/pause on visibility
     const isMobile = window.innerWidth <= 768;
     const video = section.querySelector(isMobile ? '.prologue-bg-mobile' : '.prologue-bg-desktop');
+    const hiddenVideo = section.querySelector(isMobile ? '.prologue-bg-desktop' : '.prologue-bg-mobile');
     if (!video) return;
+
+    // Prevent hidden video from loading
+    if (hiddenVideo) {
+        hiddenVideo.removeAttribute('src');
+        hiddenVideo.load();
+    }
+
+    // Force load the active video (may not have loaded if it was display:none at parse time)
+    if (video.readyState < 2) {
+        video.load();
+    }
 
     const playVideo = () => video.play().catch(() => {});
 
     if (video.readyState >= 2) {
         playVideo();
     } else {
-        video.addEventListener('loadeddata', () => playVideo(), { once: true });
+        video.addEventListener('canplay', () => playVideo(), { once: true });
     }
 
     const videoObserver = new IntersectionObserver((entries) => {
@@ -219,6 +231,7 @@ function initPrologue() {
 
     document.addEventListener('click', () => playVideo(), { once: true });
     document.addEventListener('touchstart', () => playVideo(), { once: true });
+    window.addEventListener('scroll', () => playVideo(), { once: true });
 }
 
 /**
